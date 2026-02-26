@@ -496,6 +496,7 @@ main {
 
 .about-content {
   max-width: 720px;
+  margin-inline: auto;
 }
 
 .about-text h2 {
