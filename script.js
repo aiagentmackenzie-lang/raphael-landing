@@ -235,11 +235,6 @@ function showBigTextarea(placeholder = "Add any details...") {
   });
 }
 
-// Keep old name for compatibility
-function showTextarea(placeholder) {
-  showBigTextarea(placeholder);
-}
-
 // Handle category selection
 categoryBubbles.querySelectorAll('.category-bubble').forEach(bubble => {
   // Add keyboard accessibility
@@ -365,6 +360,14 @@ chatForm.addEventListener('submit', function(e) {
     e.preventDefault();
     emailInput.style.borderColor = '#ff453a';
     emailInput.placeholder = 'Please enter a valid email';
+    
+    // Reset border on input
+    const resetBorder = () => {
+      emailInput.style.borderColor = '';
+      emailInput.removeEventListener('input', resetBorder);
+    };
+    emailInput.addEventListener('input', resetBorder);
+    
     return;
   }
   

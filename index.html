@@ -23,9 +23,8 @@
     <header class="nav">
       <div class="logo">R</div>
       <nav class="nav__links">
-        <a href="#projects">Work</a>
-        <a href="#process">Process</a>
         <a href="#projects">Projects</a>
+        <a href="#process">Process</a>
         <a href="#stack">Stack</a>
         <a href="#about">About</a>
         <a href="https://github.com/aiagentmackenzie-lang" target="_blank">GitHub</a>
@@ -344,13 +343,13 @@
           </div>
           
           <form class="chat-input" id="chat-form" action="https://formspree.io/f/xvzbnoba" method="POST">
-            <input type="hidden" name="category" id="form-category">
-            <input type="hidden" name="pain1" id="form-pain1">
-            <input type="hidden" name="pain2" id="form-pain2">
-            <input type="hidden" name="pain3" id="form-pain3">
-            <input type="hidden" name="pain4" id="form-pain4">
-            <input type="hidden" name="comments" id="form-comments">
-            <input type="hidden" name="email" id="form-email-hidden">
+            <input type="hidden" name="project_type" id="form-category">
+            <input type="hidden" name="project_description" id="form-pain1">
+            <input type="hidden" name="current_challenge" id="form-pain2">
+            <input type="hidden" name="timeline_budget" id="form-pain3">
+            <input type="hidden" name="client_name" id="form-pain4">
+            <input type="hidden" name="additional_comments" id="form-comments">
+            <input type="hidden" name="submitter_email" id="form-email-hidden">
             <input type="email" name="_replyto" placeholder="your@email.com" required id="email-input" aria-label="Email address"/>
             <button type="submit" class="chat-submit">Send →</button>
           </form>

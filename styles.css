@@ -678,11 +678,6 @@ main {
   opacity: 0.7;
 }
 
-/* Reveal animation improvements */
-.step.reveal {
-  transition-delay: calc(var(--i, 0) * 0.1s);
-}
-
 .card ul {
   list-style: none;
   display: grid;
@@ -831,8 +826,6 @@ main {
 
 /* ========== CHAT WIDGET ========== */
 
-/* ========== CHAT WIDGET ========== */
-
 .chat-section {
   padding: 80px 8vw;
 }
@@ -883,6 +876,8 @@ main {
 .chat-messages {
   padding: 24px 28px;
   min-height: 300px;
+  max-height: 500px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
