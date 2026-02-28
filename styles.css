@@ -751,6 +751,20 @@ main {
     flex-direction: column;
     gap: 18px;
     padding: 20px 5vw;
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    text-align: center;
   }
 
   .nav__links {
@@ -787,6 +801,18 @@ main {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+  }
+
+  .cta__actions {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .cta__actions .btn {
+    width: 100%;
+    text-align: center;
+    word-break: break-all;
   }
 
   .footer {
@@ -1018,19 +1044,55 @@ main {
 
 /* Mobile responsive chat */
 @media (max-width: 768px) {
+  .chat-section {
+    padding: 40px 4vw;
+  }
+
   .chat-container {
     border-radius: 16px;
+    margin: 0 -4vw;
+    width: calc(100% + 8vw);
   }
-  
+
   .chat-messages,
   .chat-header,
   .chat-input {
-    padding: 20px;
+    padding: 16px;
   }
-  
+
   .category-bubbles {
     grid-template-columns: repeat(2, 1fr);
-    padding: 0 20px 20px;
+    gap: 8px;
+    padding: 0 16px 16px;
+  }
+
+  .category-bubble {
+    padding: 16px 12px;
+  }
+
+  .chat-inline-input,
+  .chat-big-textarea {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
+
+@media (max-width: 480px) {
+  .category-bubbles {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .category-bubble {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .category-bubble__icon {
+    margin-bottom: 0;
+    font-size: 1.3rem;
   }
 }
 
