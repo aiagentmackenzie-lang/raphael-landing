@@ -23,7 +23,7 @@ const observer = new IntersectionObserver(
       }
     });
   },
-  { 
+  {
     threshold: 0.15,
     rootMargin: '0px 0px -50px 0px'
   }
@@ -85,16 +85,17 @@ function typeMessage(text, isUser = false, callback) {
   if (existingTyping) {
     existingTyping.remove();
   }
-  
+
   const messageDiv = document.createElement('div');
   messageDiv.className = `message message--${isUser ? 'user' : 'bot'}`;
-  messageDiv.innerHTML = isUser 
+  messageDiv.innerHTML = isUser
     ? `<div class="message__name">You</div>${text}`
     : `<div class="message__name">AI Assistant</div>${text}`;
-  
+
   chatMessages.appendChild(messageDiv);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-  
+  // Scroll to show the new message fully, not just the bottom
+  messageDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
   // Call callback after message appears
   if (callback) {
     setTimeout(callback, 600);
@@ -111,8 +112,8 @@ function showTyping(callback) {
     <div class="typing__dot"></div>
   `;
   chatMessages.appendChild(typingDiv);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-  
+  typingDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
   if (callback) {
     setTimeout(callback, 800);
   }
@@ -125,23 +126,23 @@ function showInput(placeholder = "Type your answer...") {
   if (existingInput) {
     existingInput.remove();
   }
-  
+
   const inputDiv = document.createElement('div');
   inputDiv.className = 'message message--user message-input';
   inputDiv.innerHTML = `
     <div class="message__name">You</div>
-    <input type="text" 
-           placeholder="${placeholder}" 
+    <input type="text"
+           placeholder="${placeholder}"
            class="chat-inline-input"
            style="background: transparent; border: none; border-bottom: 1px solid var(--neon); color: var(--text); font-family: inherit; font-size: 0.95rem; width: 100%; outline: none; padding: 8px 0;"
            autofocus>
   `;
   chatMessages.appendChild(inputDiv);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-  
+  inputDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
   const input = inputDiv.querySelector('input');
   input.focus();
-  
+
   input.addEventListener('keypress', function(e) {
     if (e.key === 'Enter' && this.value.trim()) {
       const answer = this.value.trim();
@@ -151,7 +152,7 @@ function showInput(placeholder = "Type your answer...") {
       handleAnswer(answer);
     }
   });
-  
+
   // Also handle blur to refocus
   input.addEventListener('blur', () => {
     setTimeout(() => input.focus(), 100);
@@ -165,7 +166,7 @@ function showBigTextarea(placeholder = "Add any details...") {
   if (existingInput) {
     existingInput.remove();
   }
-  
+
   const textareaDiv = document.createElement('div');
   textareaDiv.className = 'message message--user big-textarea-input';
   textareaDiv.style.maxWidth = '95%';
@@ -174,11 +175,11 @@ function showBigTextarea(placeholder = "Add any details...") {
   textareaDiv.style.border = '2px solid var(--neon)';
   textareaDiv.style.borderRadius = '16px';
   textareaDiv.style.boxShadow = '0 0 30px rgba(83, 249, 255, 0.15)';
-  
+
   textareaDiv.innerHTML = `
-    <div class="message__name" style="margin-bottom: 12px; font-size: 1.1rem;">You — Ramble Mode 📝</div>
-    <textarea 
-      placeholder="${placeholder}" 
+    <div class="message__name" style="margin-bottom: 12px; font-size: 1.1rem;">You - Ramble Mode 📝</div>
+    <textarea
+      placeholder="${placeholder}"
       class="chat-big-textarea"
       style="background: rgba(0,0,0,0.5); border: 1px solid rgba(83, 249, 255, 0.3); border-radius: 12px; color: var(--text); font-family: inherit; font-size: 1.05rem; width: 100%; outline: none; padding: 20px; resize: vertical; min-height: 180px; line-height: 1.7;"
       rows="8"
@@ -189,18 +190,18 @@ function showBigTextarea(placeholder = "Add any details...") {
     </div>
   `;
   chatMessages.appendChild(textareaDiv);
-  
+
   // Scroll to show the full textarea (it's larger than regular inputs)
   setTimeout(() => {
     textareaDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, 50);
-  
+
   const textarea = textareaDiv.querySelector('textarea');
   textarea.focus();
-  
+
   let enterCount = 0;
   let lastEnterTime = 0;
-  
+
   const handleEnter = (e) => {
     if (e.key === 'Enter') {
       const now = Date.now();
@@ -210,7 +211,7 @@ function showBigTextarea(placeholder = "Add any details...") {
         enterCount = 1;
       }
       lastEnterTime = now;
-      
+
       if (enterCount >= 2) {
         e.preventDefault();
         const answer = textarea.value.trim();
@@ -218,7 +219,7 @@ function showBigTextarea(placeholder = "Add any details...") {
         textareaDiv.classList.remove('big-textarea-input');
         textareaDiv.style.cssText = '';
         textarea.removeEventListener('keydown', handleEnter);
-        
+
         // Email form should appear next
         setTimeout(() => {
           handleAnswer(answer);
@@ -226,9 +227,9 @@ function showBigTextarea(placeholder = "Add any details...") {
       }
     }
   };
-  
+
   textarea.addEventListener('keydown', handleEnter);
-  
+
   // Also handle blur to refocus
   textarea.addEventListener('blur', () => {
     setTimeout(() => textarea.focus(), 100);
@@ -241,37 +242,37 @@ categoryBubbles.querySelectorAll('.category-bubble').forEach(bubble => {
   bubble.setAttribute('tabindex', '0');
   bubble.setAttribute('role', 'button');
   bubble.setAttribute('aria-pressed', 'false');
-  
+
   const selectCategory = function(e) {
     e.preventDefault();
-    
+
     // Remove selected from all
     categoryBubbles.querySelectorAll('.category-bubble').forEach(b => {
       b.classList.remove('selected');
       b.setAttribute('aria-pressed', 'false');
     });
-    
+
     // Add selected to clicked
     this.classList.add('selected');
     this.setAttribute('aria-pressed', 'true');
-    
+
     // Store category
     selectedCategory = this.dataset.category;
     formCategory.value = selectedCategory;
-    
+
     // Hide category bubbles after selection
     categoryBubbles.style.display = 'none';
-    
+
     // Add user message
     const categoryLabel = this.querySelector('.category-bubble__label').textContent;
     typeMessage(`I'm building a ${categoryLabel} project.`, true);
-    
+
     // Start questions after brief delay
     setTimeout(() => {
       startDiscovery();
     }, 600);
   };
-  
+
   bubble.addEventListener('click', selectCategory);
   bubble.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -284,7 +285,7 @@ categoryBubbles.querySelectorAll('.category-bubble').forEach(bubble => {
 function startDiscovery() {
   currentStep = 0;
   answers = {};
-  
+
   showTyping(() => {
     typeMessage(questions[0], false, () => {
       showInput("e.g., A dashboard for tracking...");
@@ -297,21 +298,21 @@ function handleAnswer(answer) {
   // Store answer
   const questionKey = `pain${currentStep + 1}`;
   answers[questionKey] = answer;
-  
+
   // Store in correct hidden field
   if (currentStep === 4) {
     painInputs.comments.value = answer || '(no additional comments)';
   } else {
     painInputs[questionKey].value = answer;
   }
-  
+
   // If name question (step 3), store it
   if (currentStep === 3) {
     nameCaptured = answer;
   }
-  
+
   currentStep++;
-  
+
   // Step 5 = After comments, show email form
   if (currentStep === 5) {
     // All questions done, show email
@@ -332,7 +333,7 @@ function handleAnswer(answer) {
           "Your first name...",
           ""
         ];
-        
+
         if (currentStep === 4) {
           // Step 4 = Comments textarea (BIG)
           showBigTextarea("Add any details, constraints, or wild ideas... (press Enter twice when done)");
@@ -353,31 +354,31 @@ chatForm.addEventListener('submit', function(e) {
     e.preventDefault();
     return;
   }
-  
+
   // Email validation
   const email = emailInput.value.trim();
   if (!email || !email.includes('@')) {
     e.preventDefault();
     emailInput.style.borderColor = '#ff453a';
     emailInput.placeholder = 'Please enter a valid email';
-    
+
     // Reset border on input
     const resetBorder = () => {
       emailInput.style.borderColor = '';
       emailInput.removeEventListener('input', resetBorder);
     };
     emailInput.addEventListener('input', resetBorder);
-    
+
     return;
   }
-  
+
   // Update hidden email field
   emailHidden.value = email;
-  
+
   // Simulate submission delay
   e.preventDefault();
   isSubmitting = true;
-  
+
   // Disable submit button
   const submitBtn = chatForm.querySelector('button[type="submit"]');
   if (submitBtn) {
@@ -385,15 +386,15 @@ chatForm.addEventListener('submit', function(e) {
     submitBtn.textContent = 'Sending...';
     submitBtn.style.opacity = '0.7';
   }
-  
+
   // Show user message with email
   typeMessage(email, true);
   chatForm.classList.remove('visible');
-  
+
   // Actually submit the form after showing the message
   setTimeout(() => {
     const formData = new FormData(chatForm);
-    
+
     fetch(chatForm.action, {
       method: 'POST',
       body: formData,
