@@ -242,14 +242,23 @@ function showTextarea(placeholder) {
 
 // Handle category selection
 categoryBubbles.querySelectorAll('.category-bubble').forEach(bubble => {
-  bubble.addEventListener('click', function() {
+  // Add keyboard accessibility
+  bubble.setAttribute('tabindex', '0');
+  bubble.setAttribute('role', 'button');
+  bubble.setAttribute('aria-pressed', 'false');
+  
+  const selectCategory = function(e) {
+    e.preventDefault();
+    
     // Remove selected from all
     categoryBubbles.querySelectorAll('.category-bubble').forEach(b => {
       b.classList.remove('selected');
+      b.setAttribute('aria-pressed', 'false');
     });
     
     // Add selected to clicked
     this.classList.add('selected');
+    this.setAttribute('aria-pressed', 'true');
     
     // Store category
     selectedCategory = this.dataset.category;
@@ -266,6 +275,13 @@ categoryBubbles.querySelectorAll('.category-bubble').forEach(bubble => {
     setTimeout(() => {
       startDiscovery();
     }, 600);
+  };
+  
+  bubble.addEventListener('click', selectCategory);
+  bubble.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      selectCategory.call(this, e);
+    }
   });
 });
 
@@ -334,7 +350,15 @@ function handleAnswer(answer) {
 }
 
 // Handle form submission
+let isSubmitting = false;
+
 chatForm.addEventListener('submit', function(e) {
+  // Prevent double submission
+  if (isSubmitting) {
+    e.preventDefault();
+    return;
+  }
+  
   // Email validation
   const email = emailInput.value.trim();
   if (!email || !email.includes('@')) {
@@ -349,6 +373,15 @@ chatForm.addEventListener('submit', function(e) {
   
   // Simulate submission delay
   e.preventDefault();
+  isSubmitting = true;
+  
+  // Disable submit button
+  const submitBtn = chatForm.querySelector('button[type="submit"]');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    submitBtn.style.opacity = '0.7';
+  }
   
   // Show user message with email
   typeMessage(email, true);
@@ -376,6 +409,13 @@ chatForm.addEventListener('submit', function(e) {
       showTyping(() => {
         typeMessage("Hmm, something went wrong. Email me directly at aiagent.mackenzie@gmail.com 🤖", false);
       });
+      // Re-enable form on error
+      isSubmitting = false;
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send me my brief →';
+        submitBtn.style.opacity = '1';
+      }
     });
   }, 600);
 });

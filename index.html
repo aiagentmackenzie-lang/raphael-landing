@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles.css?v=3" />
   </head>
   <body>
+    <a href="#main" class="skip-link">Skip to content</a>
     <div class="bg">
       <div class="bg__gradient"></div>
       <div class="bg__grid"></div>
@@ -308,7 +309,7 @@
             </div>
           </div>
           
-          <div class="chat-messages" id="chat-messages">
+          <div class="chat-messages" id="chat-messages" aria-live="polite" aria-atomic="false">
             <div class="message message--bot">
               <div class="message__name">AI Assistant</div>
               Hi! I'm here to help scope your project. Let's start — what category best describes what you need?
@@ -342,7 +343,7 @@
             </div>
           </div>
           
-          <form class="chat-input" id="chat-form" action="https://formspree.io/f/aiagent.mackenzie@gmail.com" method="POST">
+          <form class="chat-input" id="chat-form" action="https://formspree.io/f/xvzbnoba" method="POST">
             <input type="hidden" name="category" id="form-category">
             <input type="hidden" name="pain1" id="form-pain1">
             <input type="hidden" name="pain2" id="form-pain2">

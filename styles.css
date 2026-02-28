@@ -21,6 +21,24 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Skip to content link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--glass);
+  border: 1px solid var(--border);
+  padding: 12px 24px;
+  border-radius: 8px;
+  z-index: 200;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 20px;
+}
+
 /* Scroll anchor offset for sticky nav */
 #start-convo,
 #availability,
@@ -325,16 +343,6 @@ main {
   color: var(--muted);
   line-height: 1.5;
   margin-bottom: 20px;
-}
-
-.card__meta {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.card__meta--spaced {
-  gap: 32px;
 }
 
 /* Process Section (How I Work) */
@@ -673,18 +681,6 @@ main {
 /* Reveal animation improvements */
 .step.reveal {
   transition-delay: calc(var(--i, 0) * 0.1s);
-}
-
-.card__meta span {
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(122, 92, 255, 0.35);
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-.cards--compact .card {
-  min-height: 220px;
 }
 
 .card ul {
