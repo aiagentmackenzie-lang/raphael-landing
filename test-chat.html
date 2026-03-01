@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Test</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { 
+      background: #080b14; 
+      color: #fff; 
+      font-family: system-ui;
+      padding: 40px;
+    }
+    
+    .chat-container {
+      max-width: 720px;
+      margin: 0 auto;
+      background: rgba(12, 18, 32, 0.7);
+      border: 1px solid rgba(83, 249, 255, 0.15);
+      border-radius: 24px;
+      padding: 24px;
+    }
+    
+    .chat-messages {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+      min-height: 100px;
+    }
+    
+    .message {
+      max-width: 80%;
+      padding: 14px 18px;
+      border-radius: 18px;
+      line-height: 1.5;
+    }
+    
+    .message--bot {
+      background: rgba(255, 255, 255, 0.06);
+      align-self: flex-start;
+      margin-right: auto;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom-left-radius: 4px;
+    }
+    
+    .message--user {
+      background: linear-gradient(135deg, rgba(83, 249, 255, 0.15), rgba(122, 92, 255, 0.15));
+      align-self: flex-end;
+      margin-left: auto;
+      border: 1px solid rgba(83, 249, 255, 0.25);
+      border-bottom-right-radius: 4px;
+    }
+    
+    .category-bubbles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    
+    .category-bubble {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+    }
+    
+    .category-bubble:hover {
+      border-color: #53f9ff;
+    }
+    
+    h3 { margin: 0 0 12px; }
+    p { margin: 0; color: #a0b0cc; }
+  </style>
+</head>
+<body>
+  <h2>Chat Layout Test</h2>
+  <p>If this renders differently in Safari vs Chrome, we found the bug.</p>
+  
+  <div class="chat-container">
+    <div class="chat-messages">
+      <div class="message message--bot">
+        <strong>Bot:</strong> This should be LEFT aligned
+      </div>
+      <div class="message message--user">
+        <strong>You:</strong> This should be RIGHT aligned
+      </div>
+    </div>
+    
+    <div class="category-bubbles">
+      <div class="category-bubble">🌐 Web</div>
+      <div class="category-bubble">📱 Mobile</div>
+      <div class="category-bubble">🍎 iOS</div>
+      <div class="category-bubble">🤖 AI</div>
+      <div class="category-bubble">⚡ Integrate</div>
+      <div class="category-bubble">🔄 Auto</div>
+    </div>
+  </div>
+  
+  <script>
+    // Check if flexbox gap works
+    const test = document.createElement('div');
+    test.style.display = 'flex';
+    test.style.gap = '10px';
+    document.body.appendChild(test);
+    const gapSupported = getComputedStyle(test).gap === '10px';
+    test.remove();
+    
+    const result = document.createElement('div');
+    result.style.marginTop = '20px';
+    result.innerHTML = '<strong>Browser check:</strong> Flexbox gap ' + (gapSupported ? '✅ supported' : '❌ NOT supported');
+    document.body.appendChild(result);
+  </script>
+</body>
+</html>
